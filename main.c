@@ -122,7 +122,7 @@ typedef struct {
 
 void SplitKata(Kata K, ARRAYKATA *arr)
 {
-    int i,j;
+    int i;
     arr->neff = 0;
     Kata Kcp;
     Kcp.Length = 0;
@@ -187,9 +187,7 @@ void ReadPascal(char *filename, ARRAYKATA *arrayKata)
     arrayKata->neff=0;
 
     ARRAYKATA tempArr;
-    int charFinder;
-    int i,start;
-    Kata tempKata;
+    int i;
     boolean bisaCopy = true;
 
     // f = fopen(filename, "r");
@@ -225,8 +223,7 @@ void ReadPascal(char *filename, ARRAYKATA *arrayKata)
 int main()
 {
     printf("WELCOME to nacoPascal Syntax Checker!\n");
-
-    Kata arrayKata[9999];
-    ReadPascal("teks1.txt",arrayKata);
+    ARRAYKATA arrayKata;
+    ReadPascal("teks1.txt",&arrayKata);
     return 0;
 }

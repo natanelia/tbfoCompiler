@@ -7,7 +7,7 @@
 using namespace std;
 
 #define MAX 100
-#define for(i,a,b) for(i=a;i<b; i++)
+//#define for(i,a,b) for(i=a;i<b; i++)
 
 string gram[MAX][MAX];  //to store entered grammar
 string dpr[MAX];
@@ -17,7 +17,7 @@ inline string concat( string a, string b)   //concatenates unique non-terminals
 {
     int i;
     string r=a;
-    for(i,0,b.length())
+    for(i=0;i<b.length();i++)
         if(r.find(b[i]) > r.length())
             r+=b[i];
     return (r);
@@ -45,7 +45,7 @@ inline void break_gram(string a)    //seperates right hand side of entered gramm
 
 inline int lchomsky(string a)   //checks if LHS of entered grammar is in CNF
 {
-    if(a.length()==1 && a[0]>='A' && a[0]<='Z')
+    if(a.length()==2 && a[0]>='A' && a[0]<='Z' && a[1]>='A' && a[1]<='Z')
         return 1;
     return 0;
 }
@@ -54,7 +54,8 @@ inline int rchomsky(string a)   //checks if RHS of grammar is in CNF
 {
     if (a.length() == 1 && a[0]>='a' && a[0] <='z')
         return 1;
-    if (a.length()==2 && a[0]>='A' && a[0]<='Z' && a[1]>='A' && a[1]<='Z' )
+    if (a.length()==4 && a[0]>='A' && a[0]<='Z' && a[1]>='A' && a[1]<='Z' &&
+                        a[2]>='A' && a[2]<='Z' && a[3]>='A' && a[3]<='Z' )
         return 1;
     return 0;
 }
@@ -63,7 +64,7 @@ inline string search_prod(string p) //returns a concatenated string of variables
 {
     int j,k;
     string r="";
-    for(j,0,np)
+    for(j=0;j<np;j++)
     {
         k=1;
         while(gram[j][k] != "")
@@ -82,11 +83,12 @@ inline string gen_comb(string a, string b)  //creates every combination of varia
 {
     int i,j;
     string pri=a,re="";
-    for(i,0,a.length())
-        for(j,0,b.length())
+    for(i=0;i<a.length();i+=2)
+        for(j=0;j<b.length();j+=2)
         {
             pri="";
-            pri=pri+a[i]+b[j];
+            cout<<pri<<"\n";
+            pri=pri+a[i]+a[i+1]+b[j]+b[j+1];
             re=re+search_prod(pri);     //searches if the generated productions can be created or not
         }
     return re;
@@ -100,7 +102,7 @@ int main()
     cin >> start;
     cout<<"\nNumber of productions ";
     cin >> np;
-    for(i,0,np)
+    for(i=0;i<np;i++)
     {
         cin >> a;
         pt=a.find("->");
@@ -112,7 +114,7 @@ int main()
         }
         a = a.substr(pt+2, a.length());
         break_gram(a);
-        for(j,0,p)
+        for(j=0;j<p;j++)
         {
             gram[i][j+1]=dpr[j];
             if (rchomsky(dpr[j]) == 0)
@@ -125,12 +127,12 @@ int main()
     string matrix[MAX][MAX],st;
     cout<<"\nEnter string to be checked : ";
     cin >> str;
-    for(i,0,str.length())       //Assigns values to principal diagonal of matrix
+    for(i=0;i<str.length();i++)       //Assigns values to principal diagonal of matrix
     {
         r="";
         st = "";
         st+=str[i];
-        for(j,0,np)
+        for(j=0;j<np;j++)
         {
             k=1;
             while(gram[j][k] != "")
@@ -145,12 +147,12 @@ int main()
         matrix[i][i]=r;
     }
     int ii,kk;
-    for(k,1,str.length())       //Assigns values to upper half of the matrix
+    for(k=1;k<str.length();k++)       //Assigns values to upper half of the matrix
     {
-        for(j,k,str.length())
+        for(j=k;j<str.length();j++)
         {
             r="";
-            for(l,j-k,j)
+            for(l=j-k;l<j;l++)
             {
                 pr = gen_comb(matrix[j-k][l],matrix[l+1][j]);
                 r = concat(r,pr);
@@ -159,11 +161,11 @@ int main()
         }
     }
 
-    for(i,0,str.length())   //Prints the matrix
+    for(i=0;i<str.length();i++)   //Prints the matrix
     {
         k=0;
         l=str.length()-i-1;
-        for(j,l,str.length())
+        for(j=l;j<str.length();j++)
         {
             cout<<setw(5)<<matrix[k++][j]<<" ";
         }
@@ -171,7 +173,7 @@ int main()
     }
 
     int f=0;
-    for(i,0,start.length())
+    for(i=0;i<start.length();i++)
         if(matrix[0][str.length()-1].find(start[i]) <= matrix[0][str.length()-1].length())   //Checks if last element of first row contains a Start variable
         {
             cout<<"String can be generated\n";
