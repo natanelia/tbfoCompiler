@@ -1,0 +1,16 @@
+begin
+	input(z) {menerima masukan z berupa nilai integer}
+	while (z <= 999) do
+	begin
+		if (z<10) then
+		begin
+			a=z*2
+			output(a)
+		end
+		else
+		begin
+			output(z*10)
+		end
+		input(z)
+	end
+end

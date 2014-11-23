@@ -1,0 +1,42 @@
+AA=a=begin
+AB=b=end
+AC=c=if
+AD=d=then
+AE=e=else
+AF=f=repeat
+AG=g=until
+AH=h=while
+AI=i=do
+AJ=j=variabel
+AK=k=kondisi < > <= >= = <>
+AL=l='='
+AM=m=operator + - *
+AN=n=input
+AO=o=output
+AP=p=(
+AQ=q=)
+AR=r={
+AS=s=}
+AT=t=angka
+
+ST=Start
+IT=If-then
+IE=If-then-else
+RU=Repeat-until
+WD=While-do
+CO=Kondisi
+OP=Operation
+OM=Operasi Matematika
+IN=Input
+OU=Output
+
+ST->AA.BO.AB
+IT->AC.CO.AD.ST
+IE->IT.AE.ST
+RU->AF.BO.AG.CO
+WD->AH.CO.AI.ST
+CO->AP.AJ.AK.AJ.AQ|AP.AJ.AK.AT.AQ|AP.AT.AK.AT.AQ
+OP->AJ.AL.AJ|AJ.AL.AT|AJ.AL.OM
+OM->AJ.AM.AJ|AJ.AM.AT|AT.AM.AJ|AT.AM.AT|AJ.AM.OM|AT.AM.OM
+IN->AN.AP.AJ.AQ
+OU->AO.AP.AJ.AQ|AO.AP.AT.AQ|AO.AP.OM.AQ
